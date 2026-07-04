@@ -1,0 +1,19 @@
+{
+    "name": "waffles/ecommerce",
+    "description": "proyecto ecommerce",
+    "autoload": {
+        "psr-4": {
+            "Waffles\\Ecommerce\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "waffles"
+        }
+    ],
+    "require": {
+        "barryvdh/laravel-dompdf": "*",
+        "openpayu/openpayu_php_sdk": "*",
+        "phpmailer/phpmailer": "*"
+    }
+}

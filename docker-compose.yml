@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  apache-php:
+    image: php:8.2-apache
+    container_name: apache-php
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./html:/var/www/html
+      - ./apache-config:/etc/apache2/sites-available
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root123
+      - MYSQL_DATABASE=mibd
+    depends_on:
+      - mysql
+    networks:
+      - webnet
+    command: >
+      bash -c "apt-get update &&
+               apt-get install -y unzip git &&
+               docker-php-ext-install mysqli pdo pdo_mysql zip &&
+               a2enmod rewrite &&
+               curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
+               apache2-foreground"
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: mibd
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: contraseña123
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - webnet
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root123
+    depends_on:
+      - mysql
+    networks:
+      - webnet
+
+  composer:
+    image: composer:latest
+    container_name: composer
+    volumes:
+      - ./html:/app
+    working_dir: /app
+    networks:
+      - webnet
+    command: tail -f /dev/null
+
+volumes:
+  mysql-data:
+
+networks:
+  webnet:
+    driver: bridge
