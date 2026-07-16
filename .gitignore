@@ -1,0 +1,17 @@
+.DS_Store
+Thumbs.db
+
+# PHP / Composer
+html/vendor/
+html/.phpunit.result.cache
+html/.env
+html/*.log
+*.log
+
+# Local editor settings
+.idea/
+.vscode/
+
+# OS / temp files
+*.swp
+*~

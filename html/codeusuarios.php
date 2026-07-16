@@ -94,6 +94,7 @@ if (isset($_POST['save'])) {
     $password = mysqli_real_escape_string($con, $_POST['password']);
     $rol = mysqli_real_escape_string($con, $_POST['rol']);
     $estatus = "1";
+    $medio = '';
 
     // Verificar el rol y asignar el nombre correspondiente
     if ($rol == 1) {
@@ -120,17 +121,19 @@ if (isset($_POST['save'])) {
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $query = "INSERT INTO usuarios SET nombre='$nombre', apellidopaterno='$apellidopaterno', apellidomaterno='$apellidomaterno', username='$email', password='$hashed_password', rol='$rol', estatus='$estatus'";
+        $query = "INSERT INTO usuarios SET nombre='$nombre', apellidopaterno='$apellidopaterno', apellidomaterno='$apellidomaterno', username='$email', password='$hashed_password', rol='$rol', estatus='$estatus', medio='$medio'";
 
         $query_run = mysqli_query($con, $query);
         if ($query_run) {
 
-            // Configuración SMTP (ajusta con tus datos)
-            $host = 'smtp.gmail.com'; // O tu servidor SMTP
-            $port = 587; // O 465 para SSL
-            $smtp_user = 'tu_email@gmail.com'; // Tu correo
-            $smtp_password = 'tu_contraseña_app'; // Tu contraseña de aplicación
-            $security = 'tls'; // O 'ssl'
+            // Configuración SMTP por variables de entorno
+            $host = getenv('SMTP_HOST') ?: 'mailpit';
+            $port = (int) (getenv('SMTP_PORT') ?: 1025);
+            $smtp_user = getenv('SMTP_USER') ?: '';
+            $smtp_password = getenv('SMTP_PASSWORD') ?: '';
+            $security = getenv('SMTP_ENCRYPTION') ?: '';
+            $from_email = getenv('SMTP_FROM_EMAIL') ?: 'no-reply@local.test';
+            $from_name = getenv('SMTP_FROM_NAME') ?: 'Mi Empresa';
 
 
             // Crear instancia PHPMailer
@@ -141,13 +144,17 @@ if (isset($_POST['save'])) {
                 $mail->isSMTP();
                 $mail->Host = $host;
                 $mail->Port = $port;
-                $mail->SMTPAuth = true;
-                $mail->Username = $smtp_user;
-                $mail->Password = $smtp_password;
-                $mail->SMTPSecure = $security;
+                $mail->SMTPAuth = $smtp_user !== '';
+                if ($smtp_user !== '') {
+                    $mail->Username = $smtp_user;
+                    $mail->Password = $smtp_password;
+                }
+                if ($security !== '') {
+                    $mail->SMTPSecure = $security;
+                }
 
                 // Configurar correo
-                $mail->setFrom($smtp_user, 'Mi Empresa');
+                $mail->setFrom($from_email, $from_name);
                 $mail->addAddress($email);
                 $mail->Subject = 'NUEVO USUARIO CREADO';
                 $mail->CharSet = 'UTF-8';

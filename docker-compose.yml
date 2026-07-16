@@ -1,8 +1,9 @@
-version: '3.8'
-
 services:
   apache-php:
-    image: php:8.2-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ecomerce-apache-php
     container_name: apache-php
     ports:
       - "80:80"
@@ -15,17 +16,17 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root123
       - MYSQL_DATABASE=mibd
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=nuns2272@gmail.com
+      - SMTP_PASSWORD=jlcm vthl oulp bwxp
+      - SMTP_ENCRYPTION=tls
+      - SMTP_FROM_EMAIL=nuns2272@gmail.com
+      - SMTP_FROM_NAME=ecommerce
     depends_on:
       - mysql
     networks:
       - webnet
-    command: >
-      bash -c "apt-get update &&
-               apt-get install -y unzip git &&
-               docker-php-ext-install mysqli pdo pdo_mysql zip &&
-               a2enmod rewrite &&
-               curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
-               apache2-foreground"
 
   mysql:
     image: mysql:8.0
@@ -39,7 +40,7 @@ services:
       MYSQL_PASSWORD: contraseña123
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./ecommerce.sql:/docker-entrypoint-initdb.d/ecommerce.sql
     networks:
       - webnet
     healthcheck:
@@ -59,6 +60,15 @@ services:
       PMA_PASSWORD: root123
     depends_on:
       - mysql
+    networks:
+      - webnet
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
     networks:
       - webnet
 
