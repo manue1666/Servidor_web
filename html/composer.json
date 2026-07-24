@@ -13,7 +13,7 @@
     ],
     "require": {
         "barryvdh/laravel-dompdf": "*",
-        "openpayu/openpayu_php_sdk": "*",
+        "openpay/sdk": "^3.1",
         "phpmailer/phpmailer": "*"
     }
 }

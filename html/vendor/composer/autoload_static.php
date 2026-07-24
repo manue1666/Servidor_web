@@ -131,6 +131,10 @@ class ComposerStaticInit8339cf4ab62b95f3d288db8b279cf0df
             'Psr\\Clock\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'O' =>
+        array (
+            'Openpay\\' => 8,
+        ),
         'M' =>
         array (
             'Masterminds\\' => 12,
@@ -221,6 +225,10 @@ class ComposerStaticInit8339cf4ab62b95f3d288db8b279cf0df
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'Openpay\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/openpay/sdk/Openpay',
+        ),
         'Masterminds\\' =>
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
@@ -264,10 +272,6 @@ class ComposerStaticInit8339cf4ab62b95f3d288db8b279cf0df
     );
 
     public static $classMap = array (
-        'AuthType' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/AuthType/AuthType.php',
-        'AuthType_Basic' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/AuthType/Basic.php',
-        'AuthType_Oauth' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/AuthType/Oauth.php',
-        'AuthType_TokenRequest' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/AuthType/TokenRequest.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
@@ -284,35 +288,7 @@ class ComposerStaticInit8339cf4ab62b95f3d288db8b279cf0df
         'Filter\\FilterException' => __DIR__ . '/..' . '/symfony/polyfill-php85/Resources/stubs/Filter/FilterException.php',
         'Filter\\FilterFailedException' => __DIR__ . '/..' . '/symfony/polyfill-php85/Resources/stubs/Filter/FilterFailedException.php',
         'NoDiscard' => __DIR__ . '/..' . '/symfony/polyfill-php85/Resources/stubs/NoDiscard.php',
-        'OauthCacheFile' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Oauth/Cache/OauthCacheFile.php',
-        'OauthCacheInterface' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Oauth/Cache/OauthCacheInterface.php',
-        'OauthCacheMemcached' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Oauth/Cache/OauthCacheMemcached.php',
-        'OauthGrantType' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Oauth/OauthGrantType.php',
-        'OauthResultClientCredentials' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Oauth/OauthResultClientCredentials.php',
-        'OpenPayU' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayU.php',
-        'OpenPayU_Configuration' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Configuration.php',
-        'OpenPayU_Exception' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayUException.php',
-        'OpenPayU_Exception_Authorization' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayUException.php',
-        'OpenPayU_Exception_Configuration' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayUException.php',
-        'OpenPayU_Exception_Network' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayUException.php',
-        'OpenPayU_Exception_Request' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayUException.php',
-        'OpenPayU_Exception_ServerError' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayUException.php',
-        'OpenPayU_Exception_ServerMaintenance' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayUException.php',
-        'OpenPayU_Http' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Http.php',
-        'OpenPayU_HttpCurl' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/HttpCurl.php',
-        'OpenPayU_Oauth' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Oauth/Oauth.php',
-        'OpenPayU_Order' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/v2/Order.php',
-        'OpenPayU_Refund' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/v2/Refund.php',
-        'OpenPayU_Result' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Result.php',
-        'OpenPayU_Retrieve' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/v2/Retrieve.php',
-        'OpenPayU_Shop' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/v2/Shop.php',
-        'OpenPayU_Token' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/v2/Token.php',
-        'OpenPayU_Util' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Util.php',
-        'OpenPayuOrderStatus' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayuOrderStatus.php',
-        'OpenPayuRefundStatus' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/OpenPayuRefundStatus.php',
         'Override' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/Override.php',
-        'PayuShop' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Model/PayuShop.php',
-        'PayuShopBalance' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/Model/PayuShop/PayuShopBalance.php',
         'Pdo\\Dblib' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/Pdo/Dblib.php',
         'Pdo\\Firebird' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/Pdo/Firebird.php',
         'Pdo\\Mysql' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/Pdo/Mysql.php',
@@ -320,7 +296,6 @@ class ComposerStaticInit8339cf4ab62b95f3d288db8b279cf0df
         'Pdo\\Pgsql' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/Pdo/Pgsql.php',
         'Pdo\\Sqlite' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/Pdo/Sqlite.php',
         'ReflectionConstant' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/ReflectionConstant.php',
-        'ResultError' => __DIR__ . '/..' . '/openpayu/openpayu_php_sdk/lib/OpenPayU/ResultError.php',
         'RoundingMode' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/RoundingMode.php',
         'SQLite3Exception' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
         'Safe\\DateTime' => __DIR__ . '/..' . '/thecodingmachine/safe/lib/DateTime.php',

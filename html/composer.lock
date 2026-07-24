@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "420f63594d9abe4ff9f67dfe52a77f18",
+    "content-hash": "768340cc4e9f9834295eefd577cf57a1",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -901,55 +901,55 @@
             "time": "2026-06-18T13:49:15+00:00"
         },
         {
-            "name": "openpayu/openpayu_php_sdk",
-            "version": "2.4.2",
+            "name": "openpay/sdk",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/PayU-EMEA/openpayu_php.git",
-                "reference": "f6fb871d373b5b2f451608206771d2da7a2cd67d"
+                "url": "https://github.com/open-pay/openpay-php.git",
+                "reference": "5a922d4e95e6c68c37c6e558e33b6f7e4918f398"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PayU-EMEA/openpayu_php/zipball/f6fb871d373b5b2f451608206771d2da7a2cd67d",
-                "reference": "f6fb871d373b5b2f451608206771d2da7a2cd67d",
+                "url": "https://api.github.com/repos/open-pay/openpay-php/zipball/5a922d4e95e6c68c37c6e558e33b6f7e4918f398",
+                "reference": "5a922d4e95e6c68c37c6e558e33b6f7e4918f398",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-hash": "*",
-                "ext-json": "*",
-                "php": ">=7.4"
+                "php": ">=5.2.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.6.34"
+                "phpunit/phpunit": "4.8.*"
             },
             "type": "library",
-            "extra": [
-                {
-                    "engine": "PHP SDK"
-                }
-            ],
             "autoload": {
-                "classmap": [
-                    "lib/"
-                ]
+                "psr-4": {
+                    "Openpay\\": "Openpay/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "apache-2.0"
+                "Apache-2.0"
             ],
             "authors": [
                 {
-                    "name": "OpenPayU",
-                    "homepage": "http://developers.payu.com"
+                    "name": "Openpay",
+                    "email": "soporte@openpay.mx",
+                    "homepage": "https://www.openpay.mx/"
+                },
+                {
+                    "name": "Federico Balderas",
+                    "email": "plugins@openpay.mx",
+                    "homepage": "https://openpay.mx/"
                 }
             ],
-            "description": "OpenPayU PHP Library",
+            "description": "This is a client implementing the payment services for Openpay at openpay.mx",
             "support": {
-                "issues": "https://github.com/PayU/openpayu_php/issues",
-                "source": "https://github.com/PayU-EMEA/openpayu_php/tree/v2.4.2"
+                "issues": "https://github.com/open-pay/openpay-php/issues",
+                "source": "https://github.com/open-pay/openpay-php/tree/3.1.1"
             },
-            "time": "2026-05-14T12:25:44+00:00"
+            "time": "2024-10-28T22:15:37+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
