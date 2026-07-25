@@ -22,7 +22,11 @@ services:
       - SMTP_PASSWORD=jlcm vthl oulp bwxp
       - SMTP_ENCRYPTION=tls
       - SMTP_FROM_EMAIL=nuns2272@gmail.com
-      - SMTP_FROM_NAME=ecommerce
+      - SMTP_FROM_NAME=Fastpack Industrial
+      - OPENPAY_MERCHANT_ID=mm2ecjdsjypks8nc2art
+      - OPENPAY_PRIVATE_KEY=sk_1fa575481a09431f850d9949153b7973
+      - OPENPAY_PUBLIC_KEY=pk_dcc1ec5c2ec045c1ba2881ee901a4b19
+      - OPENPAY_SANDBOX=true
     depends_on:
       - mysql
     networks:

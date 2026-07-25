@@ -1,7 +1,7 @@
 FROM php:8.2-apache
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends unzip git libzip-dev \
-    && docker-php-ext-install mysqli pdo pdo_mysql zip \
+    && apt-get install -y --no-install-recommends unzip git libzip-dev libcurl4-openssl-dev \
+    && docker-php-ext-install mysqli pdo pdo_mysql zip curl \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
