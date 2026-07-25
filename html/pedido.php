@@ -41,7 +41,7 @@ if (!empty($alert)) {
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/menu.css">
     <link rel="shortcut icon" type="image/x-icon" href="images/ico.ico" />
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSynovc&libraries=places&callback=initMap" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0eojuRcYA1_aTNVHjxJhVHvw7aI0MBcU&libraries=places&callback=initMap" async defer></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let cart = localStorage.getItem("empresaCart");
@@ -129,7 +129,7 @@ if (!empty($alert)) {
 </head>
 
 <body>
-    <?php include('componentes/menu.php'); ?>
+    <?php include('menu.php'); ?>
 
     <div class="container-fluid">
         <div class="row mt-5 justify-content-center">
@@ -182,7 +182,7 @@ if (!empty($alert)) {
                     </div>
 
                     <div class="col-12 col-md-8 form-floating mb-3">
-                        <input type="text" class="form-control" name="calle" placeholder="Calle" autocomplete="off" required maxlength="50">
+                        <input type="text" class="form-control" name="calle" id="calle" placeholder="Calle" autocomplete="off" required maxlength="50">
                         <label for="calle">Calle</label>
                         <div class="invalid-feedback">
                             Este campo es obligatorio

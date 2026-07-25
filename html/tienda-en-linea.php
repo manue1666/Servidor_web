@@ -34,7 +34,7 @@ header("Content-Type: text/html; charset=UTF-8");
 <body style="background-color: #f5f5f5;">
     <!-- Google Tag Manager (noscript) -->
     <!-- End Google Tag Manager (noscript) -->
-    <?php include 'componentes/menu.php'; ?>
+    <?php include 'menu.php'; ?>
     <div class="container-fluid">
         <div class="row mb-5 mt-5 justify-content-start" style="margin-top: 100px !important;padding:0px 10px;">
             <?php

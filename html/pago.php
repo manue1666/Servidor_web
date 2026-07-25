@@ -7,8 +7,6 @@ if (session_status() === PHP_SESSION_NONE) {
 // error_reporting(E_ALL);
 
 require 'vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
 require 'dbcon.php';
 
 $alert = isset($_SESSION['alert']) ? $_SESSION['alert'] : null;
@@ -127,54 +125,7 @@ while ($stmtVentas->fetch()) {
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/menu.css">
     <link rel="shortcut icon" type="image/x-icon" href="images/ico.ico" />
-    <title>Pago | Mi Emmpresa</title>
-    <script type="text/javascript"
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript"
-        src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
-    <script type='text/javascript'
-        src="https://openpay.s3.amazonaws.com/openpay-data.v1.min.js"></script>
-
-    <script type="text/javascript">
-        const OPENPAY_ID = "<?php echo $_ENV['OPENPAY_ID']; ?>";
-        const OPENPAY_PK = "";
-
-        $(document).ready(function() {
-
-            OpenPay.setId(OPENPAY_ID);
-            OpenPay.setApiKey(OPENPAY_PK);
-            OpenPay.setSandboxMode(false);
-            var deviceSessionId = OpenPay.deviceData.setup("payment-form", "deviceIdHiddenFieldName");
-
-            // Ajuste en el click del botón para no pedir token si es transferencia
-            $('#pay-button').on('click', function(event) {
-                event.preventDefault();
-                const method = $('input[name="payment_method"]:checked').val();
-
-                $(this).prop("disabled", true);
-
-                if (method === 'card') {
-                    OpenPay.token.extractFormAndCreate('payment-form', sucess_callbak, error_callbak);
-                } else {
-                    // Si es transferencia, enviamos el formulario directo
-                    $('#payment-form').submit();
-                }
-            });
-
-            var sucess_callbak = function(response) {
-                var token_id = response.data.id;
-                $('#token_id').val(token_id);
-                $('#payment-form').submit();
-            };
-
-            var error_callbak = function(response) {
-                var desc = response.data.description != undefined ? response.data.description : response.message;
-                alert("ERROR [" + response.status + "] " + desc);
-                $("#pay-button").prop("disabled", false);
-            };
-
-        });
-    </script>
+    <title>Pago | Fastpack Industrial</title>
 </head>
 <style>
     label {
@@ -188,7 +139,7 @@ while ($stmtVentas->fetch()) {
 </style>
 
 <body>
-    <?php include('componentes/menu.php'); ?>
+    <?php include('menu.php'); ?>
 
     <div class="container-fluid bg-light">
         <div class="row mt-5 justify-content-center">
@@ -387,10 +338,55 @@ while ($stmtVentas->fetch()) {
 
     <?php include 'footer.php'; ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
+    <script type='text/javascript' src="https://openpay.s3.amazonaws.com/openpay-data.v1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
     <script src="js/menu.js"></script>
+    <script>
+        const OPENPAY_MERCHANT_ID = "<?php echo htmlspecialchars($_ENV['OPENPAY_MERCHANT_ID'] ?? ''); ?>";
+        const OPENPAY_PK = "<?php echo htmlspecialchars($_ENV['OPENPAY_PUBLIC_KEY'] ?? ''); ?>";
+        const OPENPAY_SANDBOX = "<?php echo ($_ENV['OPENPAY_SANDBOX'] ?? 'true') === 'true' ? 'true' : 'false'; ?>";
+
+        $(document).ready(function() {
+
+            OpenPay.setId(OPENPAY_MERCHANT_ID);
+            OpenPay.setApiKey(OPENPAY_PK);
+            OpenPay.setSandboxMode(OPENPAY_SANDBOX === 'true');
+            var deviceSessionId = OpenPay.deviceData.setup("payment-form", "deviceIdHiddenFieldName");
+
+            $('#pay-button').on('click', function(event) {
+                event.preventDefault();
+                const method = $('input[name="payment_method"]:checked').val();
+
+                $(this).prop("disabled", true);
+
+                if (method === 'card') {
+                    OpenPay.token.extractFormAndCreate('payment-form', sucess_callbak, error_callbak);
+                } else {
+                    $('#payment-form').submit();
+                }
+            });
+
+            var sucess_callbak = function(response) {
+                var token_id = response.data.id;
+                $('#token_id').val(token_id);
+                $('#payment-form').submit();
+            };
+
+            var error_callbak = function(response) {
+                var desc = response.data.description != undefined ? response.data.description : response.message;
+                Swal.fire({
+                    title: 'Error en el pago',
+                    text: desc,
+                    icon: 'error',
+                    confirmButtonText: 'Intentar de nuevo'
+                });
+                $("#pay-button").prop("disabled", false);
+            };
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('input[name="payment_method"]').on('change', function() {

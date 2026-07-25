@@ -2,14 +2,12 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+require_once __DIR__ . '/vendor/autoload.php';
 require 'dbcon.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
-require 'PHPMailer/src/Exception.php';
 
 if (isset($_POST['finalizar'])) {
 
@@ -49,11 +47,11 @@ if (isset($_POST['finalizar'])) {
         $total        = (float)$pedido['total'];
 
         // Configuracion SMTP
-        $host = 'mail.dominio.mx';
-        $port = 465;
-        $username = 'no-reply@dominio.mx';
-        $password = '=@dH6mqA5H7%MEa,';
-        $security = 'ssl';
+        $host = $_ENV['SMTP_HOST'];
+        $port = (int)$_ENV['SMTP_PORT'];
+        $username = $_ENV['SMTP_USER'];
+        $password = $_ENV['SMTP_PASSWORD'];
+        $security = $_ENV['SMTP_ENCRYPTION'];
 
 
         $mail = new PHPMailer(true);
@@ -69,10 +67,10 @@ if (isset($_POST['finalizar'])) {
         // $mail->Debugoutput = 'error_log';
 
 
-        $mail->setFrom('no-reply@dominio.mx', 'MI EMPRESA');
+        $mail->setFrom($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);
         // $mail->addReplyTo($email, $nombreuser);
         $mail->addAddress($email);
-        $mail->Subject = 'PEDIDO' . ' ' . $identificador;
+        $mail->Subject = 'Pedido en camino - ' . $identificador;
         $mail->CharSet = 'UTF-8';
         $mail->isHTML(true);
 
@@ -168,9 +166,7 @@ if (isset($_POST['finalizar'])) {
 <body style="margin:0; padding:0; background:#ffffff; font-family:Arial, sans-serif;">
 
    <div style="background-color: #f3f3f3; max-width: 600px; margin: 0px auto; text-align: center; line-height: 100px;">
-     <img src="https://datallizer.com/images/logo.png" 
-         style="width: 90%; vertical-align: middle; display: inline-block;padding: 10px 0;" 
-         alt="">
+     <h2 style="padding: 10px 0;">FASTPACK INDUSTRIAL</h2>
 </div>
 
 
@@ -214,10 +210,10 @@ if (isset($_POST['finalizar'])) {
 </div>
 
         <p style="text-align:center;"><strong>Atentamente</strong></p>
-        <p style="text-align:center;">MIEMPRESA</p>
+        <p style="text-align:center;">FASTPACK INDUSTRIAL</p>
 
         <p style="font-size:8px; color:#555;">
-            Este es un email enviado automaticamente desde el canal de comunicación del sistema de planificación de recursos empresariales MIEMPRESA, la información previa a sido almacenada en la base de datos de MIEMPRESA, la información en este email fue ingresada manualmente por el usuario, es importante tener en cuenta que la presente información podrían estar desactualizada o contener errores. Le recomendamos verificar la precisión de la misma antes de tomar decisiones basadas en estos datos.
+            Este es un email enviado automaticamente desde el sistema de Fastpack Industrial. La información en este email fue ingresada manualmente por el usuario. Le recomendamos verificar la precisión de la misma antes de tomar decisiones basadas en estos datos.
         </p>
 
     </div>
@@ -275,23 +271,27 @@ if (isset($_POST['save'])) {
         }
 
        
-        $nombre     = mysqli_real_escape_string($con, $_POST['nombre']);
-        $apellidop  = mysqli_real_escape_string($con, $_POST['apellidop']);
-        $apellidom  = mysqli_real_escape_string($con, $_POST['apellidom']);
+        $nombre     = mysqli_real_escape_string($con, $_POST['nombre'] ?? '');
+        $apellidop  = mysqli_real_escape_string($con, $_POST['apellidop'] ?? '');
+        $apellidom  = mysqli_real_escape_string($con, $_POST['apellidom'] ?? '');
         $email = mysqli_real_escape_string(
             $con,
-            strtolower(trim($_POST['email']))
+            strtolower(trim($_POST['email'] ?? ''))
         );
-        $telefono   = mysqli_real_escape_string($con, $_POST['telefono']);
-        $calle      = mysqli_real_escape_string($con, $_POST['calle']);
-        $exterior   = mysqli_real_escape_string($con, $_POST['exterior']);
-        $interior   = mysqli_real_escape_string($con, $_POST['interior']);
-        $colonia    = mysqli_real_escape_string($con, $_POST['colonia']);
-        $ciudad     = mysqli_real_escape_string($con, $_POST['ciudad']);
-        $estado     = mysqli_real_escape_string($con, $_POST['estado']);
-        $postal     = mysqli_real_escape_string($con, $_POST['postal']);
-        $pais       = mysqli_real_escape_string($con, $_POST['pais']);
-        $cupon      = mysqli_real_escape_string($con, $_POST['cuponLS']);
+        $telefono   = mysqli_real_escape_string($con, $_POST['telefono'] ?? '');
+        $calle      = mysqli_real_escape_string($con, $_POST['calle'] ?? '');
+        $exterior   = mysqli_real_escape_string($con, $_POST['exterior'] ?? '');
+        $interior   = mysqli_real_escape_string($con, $_POST['interior'] ?? '');
+        $colonia    = mysqli_real_escape_string($con, $_POST['colonia'] ?? '');
+        $ciudad     = mysqli_real_escape_string($con, $_POST['ciudad'] ?? '');
+        $estado     = mysqli_real_escape_string($con, $_POST['estado'] ?? '');
+        $postal     = mysqli_real_escape_string($con, $_POST['postal'] ?? '');
+        $pais       = mysqli_real_escape_string($con, $_POST['pais'] ?? '');
+        $cupon      = mysqli_real_escape_string($con, $_POST['cuponLS'] ?? '');
+
+        if (empty($nombre) || empty($apellidop) || empty($email) || empty($calle)) {
+            throw new Exception("Faltan campos obligatorios del formulario");
+        }
 
         $productos = json_decode($_POST['cartLS'], true);
         if (!is_array($productos)) {
@@ -310,9 +310,9 @@ if (isset($_POST['save'])) {
         
         if (!mysqli_query($con, "
             INSERT INTO pedidos
-            (nombre, apellidop, apellidom, email, telefono, calle, exterior, interior, colonia, ciudad, estado, postal, pais, cupon, estatus)
+            (nombre, apellidop, apellidom, email, telefono, calle, exterior, interior, colonia, ciudad, estado, postal, pais, cupon, cuponMonto, descuentoTotal, subtotal, total, productos, envioMonto, estatus, authorization, vigencia, banco, convenio, referencia)
             VALUES
-            ('$nombre','$apellidop','$apellidom','$email','$telefono','$calle','$exterior','$interior','$colonia','$ciudad','$estado','$postal','$pais','$cupon','$estatus')
+            ('$nombre','$apellidop','$apellidom','$email','$telefono','$calle','$exterior','$interior','$colonia','$ciudad','$estado','$postal','$pais','$cupon','0','0','0','0','[]','0','$estatus','','','','','')
         ")) {
             throw new Exception(mysqli_error($con));
         }
@@ -375,10 +375,10 @@ if (isset($_POST['save'])) {
             $descuentoTotal += $cantidadFinal * $descuentoReal;
             if (!mysqli_query($con, "
                 INSERT INTO ventas
-                (identificador, producto_id, titulo, subtitulo, detalles, sku, cantidad, mayoreo, precio, descuento)
+                (identificador, producto_id, titulo, subtitulo, detalles, sku, cantidad, surtido, mayoreo, precio, descuento)
                 VALUES
                 ('$identificador','$id','{$producto['titulo']}','{$producto['subtitulo']}','{$producto['detalles']}','{$producto['sku']}',
-                 '$cantidadFinal','$mayoreo','$precioConComision','$descuentoReal')
+                 '$cantidadFinal','0','$mayoreo','$precioConComision','$descuentoReal')
             ")) {
                 throw new Exception(mysqli_error($con));
             }
@@ -477,8 +477,12 @@ if (isset($_POST['save'])) {
     } catch (Exception $e) {
 
         mysqli_rollback($con);
-        // echo "<pre>ERROR:\n" . $e->getMessage() . "</pre>";
         error_log($e->getMessage());
+        $_SESSION['alert'] = [
+            'title'   => 'ERROR',
+            'message' => $e->getMessage(),
+            'icon'    => 'error'
+        ];
         header("Location: pedido.php");
         exit;
     }

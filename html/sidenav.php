@@ -23,6 +23,12 @@ if (!isset($_SESSION['username'])) {
                     </span>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="carga-tienda-en-linea.php">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="compras-aprobadas.php">Pedidos</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="usuarios.php">Usuarios</a>
                 </li>
                 <li class="nav-item">
