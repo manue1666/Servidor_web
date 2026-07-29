@@ -124,7 +124,7 @@ while ($stmtVentas->fetch()) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/menu.css">
-    <link rel="shortcut icon" type="image/x-icon" href="images/ico.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏭</text></svg>" />
     <title>Pago | Fastpack Industrial</title>
 </head>
 <style>
@@ -239,7 +239,7 @@ while ($stmtVentas->fetch()) {
                     <div class="containerTarjeta row">
                         <div class="col-12 mt-3">
                             <h4>Tarjetas débito / crédito</h4>
-                            <img src="cards1.png" alt="">
+                            <i class="bi bi-credit-card-2-front" style="font-size: 2rem;"></i>
                         </div>
                         <div class="col-12 col-md-6 mt-3">
                             <label>Nombre del titular</label>
@@ -284,7 +284,7 @@ while ($stmtVentas->fetch()) {
                                 <div class="col-12 col-md-6">
                                     <input type="text" class="form-control" placeholder="CVV" autocomplete="off" data-openpay-card="cvv2" minlength="3" maxlength="4">
                                 </div>
-                                <div class="col-12 col-md-6 mt-3 mt-md-0"> <img src="cvv.png" alt=""></div>
+                                <div class="col-12 col-md-6 mt-3 mt-md-0"> <i class="bi bi-credit-card-2-back" style="font-size: 2rem;"></i></div>
                             </div>
                         </div>
 
@@ -297,12 +297,12 @@ while ($stmtVentas->fetch()) {
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <p style="font-size: 10px;margin:0px;font-weight:500">Transacciones realizadas vía:</p>
-                                <img src="openpay.png" alt="">
+                                <i class="bi bi-lock-fill" style="font-size: 2rem;"></i>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="row">
                                     <div class="col-3">
-                                        <img src="security.png" alt="">
+                                        <i class="bi bi-shield-check" style="font-size: 2rem;"></i>
                                     </div>
                                     <div class="col">
                                         <p style="font-size: 10px;font-weight:500">Tus pagos se realizan de forma segura con encriptación de 256 bits</p>

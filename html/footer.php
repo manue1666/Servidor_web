@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row justify-content-evenly footer" style="background-color: #ecf0f3;padding-top:70px">
         <div class="col-3">
-            <img class="w-100" src="images/logo.png" alt="">
+            <h3>Fastpack Industrial</h3>
         </div>
         <div class="col-12 col-md-12 mb-5 text-center">
             <p style="font-weight: 500;"><i class="bi bi-c-circle"></i>Todos los derechos reservados.</p>

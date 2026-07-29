@@ -32,6 +32,11 @@ if (!isset($_SESSION['username'])) {
                     <a class="nav-link" href="usuarios.php">Usuarios</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="tienda-en-linea.php" target="_blank" title="Ver tienda pública">
+                        <i class="bi bi-shop"></i> Tienda
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="logout.php" style="color: #fff;">Logout</a>
                 </li>
             </ul>
